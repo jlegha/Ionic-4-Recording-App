@@ -1,0 +1,118 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Lagn Vivah
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-no-padding" color="secondary">
+  <ion-grid class="ion-padding">
+    <ion-row class="fixed">
+      <ion-col *ngFor="let profile of header_profiles">
+        <ion-thumbnail (click)="getProfilesBasedResults(profile.id)">
+          <img [style.border]="profile.id==profile_id ? active : ''" src="{{ profile.image }}">
+        </ion-thumbnail>
+        <label class="ion-no-margin profile-name">{{profile.name}}</label>
+      </ion-col>
+
+      <ion-col [routerDirection]="'root'" routerLink="/add-profile">
+        <ion-thumbnail>
+          <ion-icon name="add"></ion-icon>
+        </ion-thumbnail>
+        <label class="ion-no-margin profile-name">Add Profile</label>
+      </ion-col>
+
+    </ion-row>
+  </ion-grid>
+
+  <!-- only display this section for payment button -->
+  <ion-item *ngIf="profile_id && !isPaid" class="ion-margin ion-no-padding" color="light">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12">
+          <ion-card-header class="ion-no-padding" text-center center>
+            <h1 class="ion-no-margin"></h1>
+            <label class="ion-no-margin" color="primary">Please make payment for take full advantage of the application.</label>
+          </ion-card-header>
+          <ion-card-content class="ion-no-padding ion-margin-top">
+            <ion-grid>
+              <ion-row>
+                <ion-col class="ion-no-padding">
+                  <ion-button expand="full" (click)="makePayment()">Payment</ion-button>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-card-content>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+
+  <!-- profile list view -->
+  <ion-item *ngFor="let profile of profiles" class="ion-margin ion-no-padding" color="light">
+    <ion-grid style="min-height: 250px;;">
+      <ion-row>
+        <ion-col size="4" (click)="gotoProfileDetail(profile.id)" style="z-index: 1;">
+          <img [class]="blurImg" src="{{ profile.image }}" />
+        </ion-col>
+        <ion-col size="8" (click)="gotoProfileDetail(profile.id)" style="z-index: 1;">
+          <ion-card-header class="ion-no-padding">
+            <h1 class="ion-no-margin card-title">{{ (isPaid) ? profile.name : profile.name }}</h1>
+            <p class="ion-no-margin" color="primary">{{ profile.last_online }}</p>
+          </ion-card-header>
+          <ion-card-content class="ion-no-padding ion-margin-top">
+            <ion-grid>
+              <ion-row>
+                <ion-col class="ion-no-padding">
+                  {{ profile.age }} Years {{ profile.height }}<br>
+                  {{ profile.highest_education }}<br>
+                  {{ profile.state }}
+                </ion-col>
+                <ion-col class="ion-no-padding">
+                  {{ profile.job }}<br>
+                  Rs. {{ profile.income }}<br>
+                  {{ profile.marital_status }}
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-card-content>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-tabs>
+      <ion-tab-bar color="dark">
+        <ion-tab-button (click)="sendEmail(profile.id, '')" [disabled]="!isPaid">
+          <ion-icon name="mail"></ion-icon>
+          <ion-label>Send Email</ion-label>
+        </ion-tab-button>
+
+        <ion-tab-button (click)="sortlist(profile.id)" [disabled]="!isPaid">
+          <ion-icon name="star"></ion-icon>
+          <ion-label>Shortlist</ion-label>
+        </ion-tab-button>
+
+        <ion-tab-button (click)="interest(profile.id)" [disabled]="!isPaid">
+          <ion-icon name="heart"></ion-icon>
+          <ion-label>{{ (profile.is_interest_sent) ? 'Interst Sent' : 'Send Interst' }}</ion-label>
+        </ion-tab-button>
+
+        <ion-tab-button (click)="message(profile.user_id, profile.id)" [disabled]="!isPaid">
+          <ion-icon name="chatboxes"></ion-icon>
+          <ion-label>Message</ion-label>
+        </ion-tab-button>
+      </ion-tab-bar>
+    </ion-tabs>
+  </ion-item>
+
+  <div *ngIf="!profiles || profiles.length <= 0" class="no-item-found">
+    No profile found.
+  </div>
+
+</ion-content>
+
+<app-tabs></app-tabs>

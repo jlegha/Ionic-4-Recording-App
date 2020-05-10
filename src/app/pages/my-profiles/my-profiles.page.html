@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      My Profile
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content no-padding color="secondary">
+
+  <!-- <ion-card style="background: #f0ffec;"> -->
+  <ion-card style="background: #efecff;" *ngFor="let profile of profiles">
+    <div style="width: 33.33%; float: left;" (click)="gotoProfileDetail(profile.id)">
+      <img style="padding: 8px 0 8px 6px;" src="{{ profile.image }}" />
+    </div>
+    <div style="width: 66.67%; float: left;">
+      <ion-card-header class="ion-padding-horizontal">
+        <ion-list class="no-padding" no-lines style="background-color: transparent;">
+
+        <ion-item style="background: #efecff;" lines="none">
+          <ion-label  (click)="gotoProfileDetail(profile.id)">{{ profile.name }}</ion-label>
+          <ion-button slot="end" (click)="editProfile(profile.id)">edit</ion-button>
+        </ion-item>
+        </ion-list>
+      </ion-card-header>
+      
+      <ion-card-content (click)="gotoProfileDetail(profile.id)">
+        <ion-row class="status-box">
+            <ion-label>Marital Status: {{ profile.marital_status }}</ion-label>
+            <ion-label>Active: {{ profile.status }}</ion-label>
+            <ion-label>Match Found: {{ profile.is_match_found }}</ion-label>
+            <ion-label>Used for Search: {{ profile.is_search }}</ion-label>
+        </ion-row>
+      </ion-card-content>
+    </div>
+  </ion-card>
+
+  <div *ngIf="!profiles || profiles.length <= 0" class="no-item-found">
+    No profile found.
+  </div>
+
+</ion-content>
+
+<!-- <app-tabs></app-tabs> -->

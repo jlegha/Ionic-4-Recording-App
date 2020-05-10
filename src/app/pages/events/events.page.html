@@ -1,0 +1,144 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Events
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<!-- segment button  -->    
+<ion-segment (ionChange)="onFilterUpdate($event)" [(ngModel)]="status" color="primary" style="background: #fff;">
+  <ion-segment-button value="upcoming">
+    <ion-label>Upcoming</ion-label>
+  </ion-segment-button>
+  <ion-segment-button value="today" checked>
+    <ion-label>Today</ion-label>
+  </ion-segment-button>
+  <ion-segment-button value="past">
+    <ion-label>Past</ion-label>
+  </ion-segment-button>
+</ion-segment>
+
+<ion-content color="secondary">
+	<div [ngSwitch]="status">
+		<div *ngIf="past[0]">
+			<ion-list *ngSwitchCase="'past'">
+				<ion-card *ngFor="let pst of past; index as i;" (click)="gotoEventDetail(pst.id)" color="light">
+					
+						
+							<ion-img [src]="pst.image"></ion-img>
+						
+					
+					<ion-card-header>
+						<ion-card-title>{{ pst.title }}</ion-card-title>
+					</ion-card-header>
+					<ion-card-content>
+						{{ pst.description }}
+					</ion-card-content>
+					<ion-grid style="background: #e76801;">
+						<ion-row>
+							<ion-col>
+								<div class="ion-text-center">
+									<ion-card-title class="card-footer-title">Place</ion-card-title>
+									<p class="card-footer-text">{{ pst.address }}</p>
+								</div>
+							</ion-col>
+							<ion-col>
+								<div class="ion-text-center">
+									<ion-card-title class="card-footer-title">Date</ion-card-title>
+									<p class="card-footer-text">{{ pst.start_date_time.slice(0,10) }}</p>
+								</div>
+							</ion-col>
+							<ion-col>
+								<div class="ion-text-center">
+									<ion-card-title class="card-footer-title">Time</ion-card-title>
+									<p class="card-footer-text">{{ pst.start_date_time.slice(11,16) }}</p>
+								</div>
+							</ion-col>
+						</ion-row>
+					</ion-grid>
+				</ion-card>
+			</ion-list>
+	    </div>
+	  
+
+	    <div *ngIf="today[0]">
+			<ion-list *ngSwitchCase="'today'">
+				<ion-card *ngFor="let tdy of today; index as i;" (click)="gotoEventDetail(tdy.id)" color="light">
+					
+					<ion-img [src]="tdy.image"></ion-img>
+
+					<ion-card-header>
+						<ion-card-title>{{ tdy.title }}</ion-card-title>
+					</ion-card-header>
+					<ion-card-content>
+						{{ tdy.description }}
+					</ion-card-content>
+					<ion-grid style="background: #e76801;">
+						<ion-row>
+							<ion-col>
+								<div class="ion-text-center">
+									<ion-card-title class="card-footer-title">Place</ion-card-title>
+									<p class="card-footer-text">{{ tdy.address }}</p>
+								</div>
+							</ion-col>
+							<ion-col>
+								<div class="ion-text-center">
+									<ion-card-title class="card-footer-title">Date</ion-card-title>
+									<p class="card-footer-text">{{ tdy.start_date_time }}</p>
+								</div>
+							</ion-col>
+							<ion-col>
+								<div class="ion-text-center">
+									<ion-card-title class="card-footer-title">Time</ion-card-title>
+									<p class="card-footer-text">{{ tdy.start_date_time.slice(11,16) }}</p>
+								</div>
+							</ion-col>
+						</ion-row>
+					</ion-grid>
+				</ion-card>
+			</ion-list>
+	    </div>
+
+	    <div *ngIf="upcoming[0]">
+			<ion-list *ngSwitchCase="'upcoming'">
+				<ion-card *ngFor="let upcg of upcoming; index as i;" (click)="gotoEventDetail(upcg.id)" color="light">
+					
+					<ion-img [src]="upcg.image"></ion-img>
+
+					<ion-card-header>
+						<ion-card-title>{{ upcg.title }}</ion-card-title>
+					</ion-card-header>
+					<ion-card-content>
+						{{ upcg.description }}
+					</ion-card-content>
+					<ion-grid style="background: #e76801;">
+						<ion-row>
+							<ion-col>
+								<div class="ion-text-center">
+									<ion-card-title class="card-footer-title">Place</ion-card-title>
+									<p class="card-footer-text">{{ upcg.address }}</p>
+								</div>
+							</ion-col>
+							<ion-col>
+								<div class="ion-text-center">
+									<ion-card-title class="card-footer-title">Date</ion-card-title>
+									<p class="card-footer-text">{{ upcg.start_date_time }}</p>
+								</div>
+							</ion-col>
+							<ion-col>
+								<div class="ion-text-center">
+									<ion-card-title class="card-footer-title">Time</ion-card-title>
+									<p class="card-footer-text">{{ upcg.start_date_time.slice(11,16) }}</p>
+								</div>
+							</ion-col>
+						</ion-row>
+					</ion-grid>
+				</ion-card>
+			</ion-list>
+	    </div>
+    </div>
+</ion-content> 	
+    

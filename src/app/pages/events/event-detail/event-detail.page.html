@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+		<ion-back-button></ion-back-button>
+	</ion-buttons>
+    <ion-title>
+      Events
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+	<div class="detail">
+		<ion-card >
+			<ion-slides pager="true">
+				<ion-slide *ngFor="let img of images; index as i;">
+				  <ion-img [src]="img.image"></ion-img>
+				</ion-slide>
+			  </ion-slides>
+		</ion-card>
+	</div>
+
+	<div>
+		<h1 class="event-title">{{ eventDetailData.title }}</h1>
+		<p>{{ eventDetailData.description }}</p>
+
+		<ion-grid>
+		  <ion-row>
+		    <ion-col>
+		      <div class="ion-text-center">
+		  		<ion-card-title class="card-footer-title" style="font-weight: bold;">Place</ion-card-title>
+		  		<p class="card-footer-text">{{ eventDetailData.address }}</p>
+	  		  </div>
+		    </ion-col>
+		    <ion-col>
+		      <div class="ion-text-center">
+		  		<ion-card-title class="card-footer-title" style="font-weight: bold;">Date</ion-card-title>
+		  		<p class="card-footer-text">{{ date }}</p>
+	  		  </div>
+		    </ion-col>
+		    <ion-col>
+		      <div class="ion-text-center">
+		  		<ion-card-title class="card-footer-title" style="font-weight: bold;">Time</ion-card-title>
+		  		<p class="card-footer-text">{{ time }}</p>
+	  		  </div>
+		    </ion-col>
+		  </ion-row>
+		</ion-grid>
+	</div>
+
+	<div>
+		<ion-button *ngIf="editable" class="btn-theme" shape="round" color="primary" (click)="editEvent(eventDetailData.id)">Edit Event</ion-button>
+		<ion-button *ngIf="editable" class="btn-theme" shape="round" color="primary" (click)="deleteEvent(eventDetailData.id)">Delete Event</ion-button>
+		<ion-button class="btn-theme" shape="round" color="primary" (click)="reportEvent(eventDetailData.id)">Report Event</ion-button>
+	</div>
+
+	
+
+</ion-content>

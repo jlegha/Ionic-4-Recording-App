@@ -1,0 +1,144 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Edit Event</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content style="background: #fff;" color="white">
+  <form #form="ngForm" (ngSubmit)="onSubmit(form)">
+    <ion-grid>
+      <ion-row color="primary" class="ion-justify-content-center">
+        <ion-col class="ion-align-self-center">
+          <div class="register-form">
+            <ion-item>
+              <ion-label position="floating">Event Type</ion-label>
+              <ion-select name="eventType" [value]="eventDetailData.event_type" interface="popover"ngModel required  placeholder="Select Event Type">
+                <ion-select-option *ngFor="let type of types">{{ type }}</ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Event Name</ion-label>
+              <ion-input name="eventName" [value]="eventDetailData.title" type="text" placeholder="Write event name" ngModel required></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Address</ion-label>
+              <ion-input name="address" [value]="eventDetailData.address" type="text" placeholder="Enter Place" ngModel required></ion-input>
+            </ion-item>
+            
+              <ion-row> 
+                <ion-col>
+                  <ion-item>
+                    <ion-label position="floating">Start Date</ion-label>
+                    <ion-datetime 
+                      name="startDate" 
+                      [value]="eventDetailData.start_date_time"
+                      displayFormat="D MMM YYYY H:mm" 
+                      placeholder="Enter Start Date"
+                      [min]="2020" 
+                      [max]="2024" 
+                      ngModel
+                      #startDateCtrl="ngModel"
+                      required
+                    ></ion-datetime>
+                  </ion-item>
+                </ion-col>
+                <ion-col>
+                  <ion-item>
+                    <ion-label position="floating">End Date</ion-label>
+                    <ion-datetime 
+                      name="endDate" 
+                      [value]="eventDetailData.end_date_time"
+                      displayFormat="D MMM YYYY H:mm" 
+                      placeholder="Enter End Date"
+                      [min]="startDateCtrl.value" 
+                      [max]="2026" 
+                      ngModel
+                    ></ion-datetime>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+            <ion-row>
+              <ion-col>
+                <ion-button color="primary" (click)="choose()">
+                  Attachment
+                 <ion-icon slot="end" name="attach-outline"></ion-icon>
+               </ion-button><p>{{ fileName }}</p>
+              </ion-col>
+            </ion-row>
+            <ion-item>
+              <ion-label>Public</ion-label>
+              <ion-toggle checked [(ngModel)]="sausage" name="toogle" ngModel required></ion-toggle>
+            </ion-item>
+            <ion-item *ngIf="!sausage">
+              <ion-label position="floating">Private Invitations</ion-label>
+              <ion-select multiple="true" name="invite" interface="alert" [value]="" ngModel required placeholder="Select Event Type">
+                <ion-select-option *ngFor="let user of users">{{ user.name }}</ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">About Event</ion-label>
+              <ion-textarea 
+                name="description" 
+                [value]="eventDetailData.description"
+                [(ngModel)]="description"
+                rows="6" 
+                cols="20" 
+                placeholder="Tell us more about this event" 
+                ngModel
+                required
+                ></ion-textarea>
+            </ion-item>
+
+            <ion-list>
+              <ion-item *ngFor="let img of loadedImages; index as pos" class="ion-text-wrap">
+                <ion-thumbnail slot="start">
+                  <ion-img [src]="img.image"></ion-img>
+                </ion-thumbnail>
+                <ion-label>
+                  {{ img.name }}
+                </ion-label>
+                <ion-button slot="end" fill="clear" (click)="deleteLoadedImages(img, pos)">
+                  <ion-icon slot="icon-only" name="trash" size="large"></ion-icon>
+                </ion-button>
+              </ion-item>
+            </ion-list>
+
+            <ion-grid>
+              <h3 *ngIf="images.length == 0" class="ion-text-center">Please Select Image!</h3>
+              
+              <ion-list>
+                <ion-item *ngFor="let img of images; index as pos" class="ion-text-wrap">
+                  <ion-thumbnail slot="start">
+                    <ion-img [src]="img.path"></ion-img>
+                  </ion-thumbnail>
+                  <ion-label>
+                    {{ img.name }}
+                  </ion-label>
+                  <ion-button slot="end" fill="clear" (click)="startUpload(img, pos)">
+                    <ion-icon slot="icon-only" name="cloud-upload" size="large"></ion-icon>
+                  </ion-button>
+                  <ion-button slot="end" fill="clear" (click)="deleteImage(img, pos)">
+                    <ion-icon slot="icon-only" name="trash" size="large"></ion-icon>
+                  </ion-button>
+                </ion-item>
+              </ion-list>
+              <div class="ion-text-center">
+                <ion-button color="primary" (click)="selectImage()">
+                  <ion-icon slot="start" name="camera"></ion-icon>
+                  Select Image</ion-button>
+              </div>
+              
+            </ion-grid>
+          </div>
+          <div>
+            <ion-button class="btn-theme" type="submit" shape="round" color="primary" [disabled]="form.invalid">Update Event
+            </ion-button>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>

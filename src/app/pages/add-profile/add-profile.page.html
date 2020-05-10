@@ -1,0 +1,367 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Add Profile
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="white">
+
+  <form *ngIf="allStaticAndDynamicLists" (ngSubmit)="saveProfile()" [formGroup]="addProfileForm">
+
+    <div class="accordion vertical">
+
+      <ion-item>
+        <ion-avatar (click)="selectImage()"
+          style="width: 100px; height: 100px; margin: 0 auto 40px; position: relative;">
+          <ion-icon name="add-outline" class="edite-icon" color="primary"></ion-icon>
+          <img *ngIf="images.length > 0" [src]="images[0].path">
+          <img *ngIf="images.length == 0" [src]="allStaticAndDynamicLists.no_image">
+        </ion-avatar>
+      </ion-item>
+
+      <ul>
+        <li>
+          <input type="radio" id="radio-1" name="radio-accordion" (click)="accordionClicked('radio-1')"
+            checked="checked" />
+          <label for="radio-1">Basic Details <ion-icon class="add-icon" [name]="(active=='radio-1') ? 'remove' : 'add'"
+              color="primary"></ion-icon></label>
+          <div class="content">
+            <ion-item>
+              <ion-label position="floating">Name</ion-label>
+              <ion-input [(ngModel)]="profile_detail.basic.name" formControlName="name" type="text" placeholder="Name"
+                required></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Gender</ion-label>
+              <ion-select formControlName="gender" interface="alert" multiple="false" placeholder="Select Gender">
+                <ion-select-option *ngFor="let value of allStaticAndDynamicLists.genders | keyvalue"
+                  value="{{value.key}}">{{value.value}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">DOB</ion-label>
+              <ion-datetime [(ngModel)]="profile_detail.basic.dob" formControlName="dob" placeholder="DOB" required>
+              </ion-datetime>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Birth Time</ion-label>
+              <ion-datetime [(ngModel)]="profile_detail.basic.birth_time" formControlName="birth_time"
+                displayFormat="h:mm a" placeholder="Birth Time" required></ion-datetime>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Birth Place</ion-label>
+              <ion-input [(ngModel)]="profile_detail.basic.birth_place" formControlName="birth_place" type="text"
+                placeholder="Birth Place" required></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Marital Status</ion-label>
+              <ion-select formControlName="marital_status_id" interface="alert" multiple="false"
+                placeholder="Select Marital Status">
+                <ion-select-option *ngFor="let value of allStaticAndDynamicLists.marital_status | keyvalue"
+                  value="{{value.key}}">{{value.value}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Height</ion-label>
+              <ion-select formControlName="height" interface="alert" multiple="false" placeholder="Select Height">
+                <ion-select-option *ngFor="let value of allStaticAndDynamicLists.heights | keyvalue"
+                  value="{{value.key}}">{{value.value}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Complaxtion</ion-label>
+              <ion-select formControlName="complexion" interface="alert" multiple="false"
+                placeholder="Select Complexion">
+                <ion-select-option *ngFor="let value of allStaticAndDynamicLists.complexions | keyvalue"
+                  value="{{value.key}}">{{value.value}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Highest Education</ion-label>
+              <ion-select formControlName="highest_education_id" interface="alert" multiple="false"
+                placeholder="Select Highest Education">
+                <ion-select-option *ngFor="let value of allStaticAndDynamicLists.educations | keyvalue"
+                  value="{{value.key}}">
+                  {{value.value}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </div>
+        </li>
+
+        <li>
+          <input type="radio" id="radio-2" name="radio-accordion" (click)="accordionClicked('radio-2')" />
+          <label for="radio-2">Address <ion-icon class="add-icon" [name]="(active=='radio-2') ? 'remove' : 'add'"
+              color="primary"></ion-icon></label>
+          <div class="content">
+            <ion-item>
+              <ion-label position="floating">State</ion-label>
+              <ion-select formControlName="state_id" (ionChange)="setStateCities($event)" interface="alert"
+                multiple="false" placeholder="Select State">
+                <ion-select-option *ngFor="let value of citiesStates.states | keyvalue" value="{{value.key}}">
+                  {{value.value}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">District</ion-label>
+              <ion-select formControlName="district_id" interface="alert" multiple="false" placeholder="Select State">
+                <ion-select-option *ngFor="let value of cities | keyvalue" value="{{value.key}}">{{value.value}}
+                </ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Village</ion-label>
+              <ion-input formControlName="village" type="text" placeholder="Village"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Address</ion-label>
+              <ion-input formControlName="address" type="text" placeholder="Address"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Pincode</ion-label>
+              <ion-input formControlName="pincode" type="number" placeholder="Pincode"></ion-input>
+            </ion-item>
+          </div>
+        </li>
+
+        <li>
+          <input type="radio" id="radio-3" name="radio-accordion" (click)="accordionClicked('radio-3')" />
+          <label for="radio-3">Occupation <ion-icon class="add-icon" [name]="(active=='radio-3') ? 'remove' : 'add'"
+              color="primary"></ion-icon></label>
+          <div class="content">
+            <ion-item>
+              <ion-label position="floating">Occupation</ion-label>
+              <ion-select formControlName="job_id" interface="alert" multiple="false" placeholder="Select Occupation">
+                <ion-select-option *ngFor="let value of allStaticAndDynamicLists.jobs | keyvalue" value="{{value.key}}">
+                  {{value.value}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Income</ion-label>
+              <ion-select formControlName="income" interface="alert" multiple="false" placeholder="Select Income">
+                <ion-select-option *ngFor="let value of allStaticAndDynamicLists.incomes | keyvalue"
+                  value="{{value.key}}">{{value.value}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Occupation Description</ion-label>
+              <ion-textarea formControlName="job_description" rows="5" placeholder="Occupation Description">
+              </ion-textarea>
+            </ion-item>
+          </div>
+        </li>
+
+        <li>
+          <input type="radio" id="radio-4" name="radio-accordion" (click)="accordionClicked('radio-4')" />
+          <label for="radio-4">Education <ion-icon class="add-icon" [name]="(active=='radio-4') ? 'remove' : 'add'"
+              color="primary"></ion-icon></label>
+          <div class="content">
+            <div formArrayName="educations"
+              *ngFor="let singleValue of addProfileForm.get('educations')['controls']; let i = index;">
+              <div class="single-box" [formGroupName]="i">
+                <ion-item>
+                  <ion-label position="floating">Education</ion-label>
+                  <ion-select formControlName="education_id" interface="alert" multiple="false"
+                    placeholder="Select Education">
+                    <ion-select-option *ngFor="let value of allStaticAndDynamicLists.educations | keyvalue"
+                      value="{{value.key}}">
+                      {{value.value}}</ion-select-option>
+                  </ion-select>
+                </ion-item>
+                <ion-item>
+                  <ion-label position="floating">Passing Year</ion-label>
+                  <ion-datetime formControlName="passing_year" displayFormat="YYYY" placeholder="Passing Year" required>
+                  </ion-datetime>
+                </ion-item>
+                <ion-item>
+                  <ion-label position="floating">Institute</ion-label>
+                  <ion-input formControlName="institute" type="text" placeholder="About Institute">
+                  </ion-input>
+                </ion-item>
+                <!-- <ion-button type="button" slot="end" size="small" shape="round" color="primary" (click)="removeEducation(i)">Remove</ion-button> -->
+              </div>
+            </div>
+            <ion-button type="button" class="btn-theme" slot="end" size="small" shape="round" color="primary"
+              (click)="addMoreEducation()">Add
+              More</ion-button>
+          </div>
+        </li>
+
+        <li>
+          <input type="radio" id="radio-5" name="radio-accordion" (click)="accordionClicked('radio-5')" />
+          <label for="radio-5">Gotra's <ion-icon class="add-icon" [name]="(active=='radio-5') ? 'remove' : 'add'"
+              color="primary"></ion-icon></label>
+          <div class="content">
+            <div formArrayName="gotras"
+              *ngFor="let singleValue of addProfileForm.get('gotras')['controls']; let i = index;">
+              <div class="single-box" [formGroupName]="i">
+                <ion-item>
+                  <ion-label position="floating">Gotra Type</ion-label>
+                  <ion-select formControlName="gotra_type" interface="alert" multiple="false" placeholder="Gotra Type">
+                    <ion-select-option *ngFor="let value of allStaticAndDynamicLists.gotras | keyvalue"
+                      value="{{value.key}}">
+                      {{value.value}}</ion-select-option>
+                  </ion-select>
+                </ion-item>
+                <ion-item>
+                  <ion-label position="floating">Gotra Name</ion-label>
+                  <ion-input formControlName="gotra_name" type="text" placeholder="Gotra Name">
+                  </ion-input>
+                </ion-item>
+                <!-- <ion-button type="button" slot="end" size="small" shape="round" color="primary" (click)="removeGotra(i)">Remove</ion-button> -->
+              </div>
+            </div>
+            <ion-button type="button" class="btn-theme" slot="end" size="small" shape="round" color="primary"
+              (click)="addMoreGotra()">Add
+              More</ion-button>
+          </div>
+        </li>
+
+        <li>
+          <input type="radio" id="radio-6" name="radio-accordion" (click)="accordionClicked('radio-6')" />
+          <label for="radio-6">Relative's <ion-icon class="add-icon" [name]="(active=='radio-6') ? 'remove' : 'add'"
+              color="primary"></ion-icon></label>
+          <div class="content">
+            <div formArrayName="relatives"
+              *ngFor="let singleValue of addProfileForm.get('relatives')['controls']; let i = index;">
+              <div class="single-box" [formGroupName]="i">
+                <ion-item>
+                  <ion-label position="floating">Name</ion-label>
+                  <ion-input formControlName="name" type="text" placeholder="Name">
+                  </ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label position="floating">Mobile</ion-label>
+                  <ion-input formControlName="mobile" type="number" placeholder="Mobile">
+                  </ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label position="floating">Email</ion-label>
+                  <ion-input formControlName="email" type="email" placeholder="Email">
+                  </ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label position="floating">Job</ion-label>
+                  <ion-select formControlName="job_id" interface="alert" multiple="false" placeholder="Select Job">
+                    <ion-select-option *ngFor="let value of allStaticAndDynamicLists.jobs | keyvalue"
+                      value="{{value.key}}">
+                      {{value.value}}</ion-select-option>
+                  </ion-select>
+                </ion-item>
+                <ion-item>
+                  <ion-label position="floating">State</ion-label>
+                  <ion-select formControlName="state_id" interface="alert" multiple="false" placeholder="Select State">
+                    <ion-select-option *ngFor="let value of citiesStates.states | keyvalue" value="{{value.key}}">
+                      {{value.value}}</ion-select-option>
+                  </ion-select>
+                </ion-item>
+                <ion-item>
+                  <ion-label position="floating">Address</ion-label>
+                  <ion-input formControlName="address" type="text" placeholder="Address">
+                  </ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label position="floating">Remark</ion-label>
+                  <ion-input formControlName="remark" type="text" placeholder="Remark">
+                  </ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label position="floating">Relation</ion-label>
+                  <ion-select formControlName="relation" interface="alert" multiple="false"
+                    placeholder="Select Relation">
+                    <ion-select-option *ngFor="let value of allStaticAndDynamicLists.relations | keyvalue"
+                      value="{{value.key}}">
+                      {{value.value}}</ion-select-option>
+                  </ion-select>
+                </ion-item>
+                <!-- <ion-button type="button" slot="end" size="small" shape="round" color="primary" (click)="removeRelative(i)">Remove</ion-button> -->
+              </div>
+            </div>
+            <ion-button type="button" class="btn-theme" slot="end" size="small" shape="round" color="primary"
+              (click)="addMoreRelative()">Add
+              More</ion-button>
+          </div>
+        </li>
+
+        <li>
+          <input type="radio" id="radio-7" name="radio-accordion" (click)="accordionClicked('radio-7')" />
+          <label for="radio-7">Contact Person <ion-icon class="add-icon" [name]="(active=='radio-7') ? 'remove' : 'add'"
+              color="primary"></ion-icon></label>
+          <div class="content">
+            <div formArrayName="contactPersons"
+              *ngFor="let singleValue of addProfileForm.get('contactPersons')['controls']; let i = index;">
+              <div class="single-box" [formGroupName]="i">
+                <ion-item>
+                  <ion-label position="floating">Name</ion-label>
+                  <ion-input formControlName="name" type="text" placeholder="Name">
+                  </ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label position="floating">Mobile</ion-label>
+                  <ion-input formControlName="mobile" type="number" placeholder="Mobile">
+                  </ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label position="floating">Email</ion-label>
+                  <ion-input formControlName="email" type="email" placeholder="Email">
+                  </ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label position="floating">Remark</ion-label>
+                  <ion-input formControlName="remark" type="text" placeholder="Remark">
+                  </ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label position="floating">Contact Time</ion-label>
+                  <ion-select formControlName="contact_time" interface="alert" multiple="false"
+                    placeholder="Select Contact Time">
+                    <ion-select-option *ngFor="let value of allStaticAndDynamicLists.contact_timings | keyvalue"
+                      value="{{value.key}}">
+                      {{value.value}}</ion-select-option>
+                  </ion-select>
+                </ion-item>
+                <!-- <ion-button type="button" slot="end" size="small" shape="round" color="primary" (click)="removeContactPerson(i)">Remove</ion-button> -->
+              </div>
+            </div>
+            <!-- <ion-button type="button" class="btn-theme" slot="end" size="small" shape="round" color="primary" (click)="addMoreContactPerson()">Add
+              More</ion-button> -->
+          </div>
+        </li>
+
+        <li>
+          <input type="radio" id="radio-8" name="radio-accordion" (click)="accordionClicked('radio-8')" />
+          <label for="radio-8">Others <ion-icon class="add-icon" [name]="(active=='radio-8') ? 'remove' : 'add'"
+              color="primary"></ion-icon></label>
+          <div class="content">
+            <ion-item>
+              <ion-label position="floating">Number of Brothers</ion-label>
+              <ion-input formControlName="no_of_brothers" type="number" placeholder="Number of Brothers">
+              </ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Number of Sisters</ion-label>
+              <ion-input formControlName="no_of_sisters" type="number" placeholder="Number of Sisters">
+              </ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">About Profile</ion-label>
+              <ion-textarea formControlName="about_profile" rows="5" placeholder="About Profile">
+              </ion-textarea>
+            </ion-item>
+          </div>
+        </li>
+      </ul>
+
+    </div>
+
+    <ion-button type="submit" class="btn-theme" shape="round" color="primary" [disabled]="!addProfileForm.valid">Add
+      Profile</ion-button>
+  </form>
+
+</ion-content>
+
+<!-- <app-tabs></app-tabs> -->

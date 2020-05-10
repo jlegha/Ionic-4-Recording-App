@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      {{title}}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="chats" class="message-wrap">
+    <div *ngFor="let msg of chats" class="message" [class.left]="msg.receiver_id == currentUser.id"
+      [class.right]="msg.sender_id == currentUser.id">
+      <div class="msg-detail">
+        <div class="msg-info">
+          <p>{{msg.created_at}}</p>
+        </div>
+        <div class="msg-content">
+          <span class="triangle"></span>
+          <p class="line-breaker">{{msg.message}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>
+
+<ion-footer no-border [style.height]="showEmojiPicker ? '255px' : '55px'">
+  <div class="input-wrap">
+    <textarea #chat_input placeholder="Text Input" [(ngModel)]="message" (focusin)="onFocus()">
+    </textarea>
+    <button class="send-button" ion-button clear icon-only item-right (click)="sendMsg()" [disabled]="!message">
+      <ion-icon name="ios-send" ios="ios-send" md="md-send"></ion-icon>
+    </button>
+  </div>
+</ion-footer>

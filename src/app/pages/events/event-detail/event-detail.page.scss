@@ -1,0 +1,30 @@
+ion-content{
+    --background: #f4f4f4;
+}
+ion-img{
+    display: flex;
+    flex-direction: column;
+    width: 100% !important;
+    height: 50% !important;
+    margin: 0 !important;
+  }
+// .detail {
+//     width: 100% !important;
+//     height: 50px;
+//   }
+.event-detail{
+	color: #000;
+}
+.event-title{
+	font-size: 20px;
+	font-weight: bold;
+}
+.card-footer-text{
+	margin-top: 5px;
+}
+
+.btn-theme {
+    margin: 40px auto;
+    text-align: center;
+    display: table;
+}

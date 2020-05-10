@@ -1,0 +1,35 @@
+
+ion-thumbnail img {
+    border-radius: 50%;
+    border: 1px solid #e72200;
+}
+ion-thumbnail ion-icon {
+    font-size: 22px;
+    background: red;
+    border-radius: 50%;
+    color: #fff;
+    padding: 13px;
+    text-align: center;
+}
+.sc-ion-card-md-s img {
+    min-height: 210px;
+    height: 100%;
+}
+.no-item-found{
+    padding-top: 50%;
+    text-align: center;
+    font-family: cursive;
+    font-size: 20px;
+}
+
+.contact-name {
+    font-size: 20px;
+}
+
+.contact-img {
+    width: 60px;
+}
+
+.contact-box {
+    padding: 0px 14px 14px 14px;
+}

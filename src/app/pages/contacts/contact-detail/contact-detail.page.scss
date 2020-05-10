@@ -1,0 +1,138 @@
+ion-toolbar {
+    --background: transparent;
+    --ion-color-base: transparent !important;
+    }
+    
+    ion-item{
+        --background: primary;
+        --color: black;
+    }
+    
+    ion-button{
+        --background: black;
+    }
+    
+    .btn-theme {
+        margin: 20px auto;
+        text-align: center;
+        display: table;
+    }
+    .add-icon{
+        float: right;
+        font-size: 20px;
+        font-weight: bold;
+    }
+    .content ion-label {
+        font-size: 14px;
+        margin-bottom: 15px;
+        margin-top: 10px;
+    }
+    .accordion {
+        margin:0 auto;
+        font-size:12px;
+    }
+    .accordion ul {
+        list-style:none;
+        margin:0;
+        padding:0;    
+    }
+    .accordion li {
+        margin:0;
+        padding:0;
+    }
+    .accordion [type=radio], .accordion [type=checkbox] {
+        display:none;
+    }
+    .accordion label {
+        display:block;
+        font-size:14px;
+        line-height:16px;
+        color:#e72200;
+        font-weight:700;
+        cursor:pointer;
+        text-transform:uppercase;
+        -webkit-transition: all .2s ease-out;
+        -moz-transition: all .2s ease-out;
+    }
+    .accordion ul li label:hover, .accordion [type=radio]:checked ~ label, .accordion [type=checkbox]:checked ~ label {
+        color:primary;
+    }
+    .accordion .content {
+        padding:0 10px;
+        overflow:hidden;
+        -webkit-transition: all .5s ease-out;
+        -moz-transition: all .5s ease-out;
+    }
+    .accordion p {
+        color:#333;
+        margin:0 0 10px;
+    }
+    .accordion h3 {
+        color:#542437;
+        padding:0;
+        margin:10px 0;
+    }
+    
+    
+    /* Vertical */
+    .vertical ul li {
+        overflow:hidden;
+        margin:0 0 1px;
+    }
+    .vertical ul li label {
+        padding:10px;
+    }
+    .vertical [type=radio]:checked ~ label, .vertical [type=checkbox]:checked ~ label {
+        border-bottom:0;
+    }
+    .vertical ul li label:hover {
+        /* border:1px solid #542437;  We don't want the border to disappear on hover */
+    }
+    .vertical ul li .content {
+        height:0px;
+        border-top:0;
+    }
+    .vertical [type=radio]:checked ~ label ~ .content, .vertical [type=checkbox]:checked ~ label ~ .content {
+        height:420px;
+        overflow:scroll;
+    }
+    .status-box ion-label {
+        width: 100%;
+        display: block;
+    }
+    hr {
+        background: black;
+    }
+
+    .contact {
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    .contact-name {
+        font-size: 18px;
+        padding-left: 5px;
+    }
+
+    .contact-info, .contact-info-2 {
+        font-size: 14px;
+    }
+
+    .mobiles-box {
+        width: 100%;
+        line-height: 1.5;
+        border-top: 1px solid #ddd;
+        padding: 0px;
+    }
+
+    .relative-box {
+        width: 100%;
+        line-height: 1.5;
+        border-top: 1px solid #ddd;
+        padding: 0px;
+    }
+
+    .relation {
+        font-weight: bold;
+    }
+    

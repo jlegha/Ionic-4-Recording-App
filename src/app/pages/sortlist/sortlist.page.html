@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Sortlist
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-no-padding" color="secondary">
+
+  <!-- profile slider view -->
+  <ion-grid padding>
+    <ion-row>
+      <ion-col *ngFor ="let profile of header_profiles">
+        <ion-thumbnail (click)="getProfilesBasedForSelectedProfile(profile.id)">
+          <img [style.border]="profile.id==profile_id ? active : ''" src="{{ profile.image }}">
+        </ion-thumbnail>
+        {{profile.name}}
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- profile list view -->  
+  <ion-card color="light" [routerDirection]="'forward'" routerLink="/profile-detail/{{profile.profile_id}}" *ngFor ="let profile of profiles">
+    <div style="width: 33.33%; float: left;">
+      <img style="padding: 8px 0 8px 6px;" src="{{ profile.image }}" />
+    </div>
+    <div style="width: 66.67%; float: left;">
+      <ion-card-header>
+        <ion-label slot="end">{{ profile.profile_number }}</ion-label>
+        <h1 class="ion-no-margin card-title">{{ profile.name }}</h1>
+        <p class="ion-no-margin" color="primary">{{ profile.last_online }}</p>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-row>
+          <ion-col class="ion-no-padding">
+            {{ profile.age }} Years {{ profile.height }}<br>
+            {{ profile.highest_education }}<br>
+            {{ profile.state }}
+          </ion-col>
+          <ion-col class="ion-no-padding">
+            {{ profile.job }}<br>
+            Rs. {{ profile.income }}<br>
+            {{ profile.marital_status }}
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+    </div>
+  </ion-card>
+
+  <div *ngIf="!profiles || profiles.length <= 0" class="no-item-found">
+    No profile found.
+  </div>
+  
+</ion-content>
+
+<!-- <app-tabs></app-tabs> -->

@@ -1,0 +1,39 @@
+<ion-content class="ion-padding ion-text-center" class="background" no-scroll>
+  <div class="logo">
+    <img src="../assets/imgs/logo-app.png"/>
+  </div>
+  <div class="ion-text-center">
+    <ion-title size="large" color="light">Verify Your Mobile Number</ion-title>
+    <p>Enter Your OTP Code</p>
+  </div>
+  
+  <form (ngSubmit)="OTPVerified()" [formGroup]="otpForm">
+    <div class="login-form">
+      <ion-row style="justify-content: center;">
+        <ion-item color="blank">
+          <ion-input type="tel" maxlength="1" formControlName="otp1" onfocus="this.value=''" #tel1 (keyup)="next(tel2, $event)">
+          </ion-input>
+        </ion-item>
+        <ion-item color="blank">
+          <ion-input type="tel" maxlength="1" formControlName="otp2" onfocus="this.value=''" #tel2 (keyup)="next(tel3, $event)" (keydown)="back(tel1, tel2, $event)">
+          </ion-input>
+        </ion-item>
+        <ion-item color="blank">
+          <ion-input type="tel" maxlength="1" formControlName="otp3" onfocus="this.value=''" #tel3 (keyup)="next(tel4, $event)" (keydown)="back(tel2, tel3, $event)">
+          </ion-input>
+        </ion-item>
+        <ion-item color="blank">
+          <ion-input type="tel" maxlength="1" formControlName="otp4" onfocus="this.value=''" #tel4 (keyup)="next(null, $event)" (keydown)="back(tel3, tel4, $event)">
+          </ion-input>
+        </ion-item>    
+      </ion-row>
+      <ion-button expand="full" color="light" type="submit">VERIFY</ion-button>
+    </div>
+  </form>
+  <div class="ion-text-center">
+    <p>Didn't receive the code? {{ timeOutBtn ? '' : 'Retry in '+ counterVal +'s.'}}</p>
+  <ion-button full color="blank" class="transparent" (click)="timeoutOnButtonClicked('text')" [disabled]="!timeOutBtn">Resend Code</ion-button>
+  </div>
+  
+  <!-- <ion-button full color="blank" class="transparent" (click)="timeoutOnButtonClicked('voice')" [disabled]="!timeOutBtn">Verify via call</ion-button> -->
+</ion-content>

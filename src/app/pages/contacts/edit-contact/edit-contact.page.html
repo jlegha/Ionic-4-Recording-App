@@ -1,0 +1,146 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      Edit Contact
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <form *ngIf="allStaticAndDynamicLists" (ngSubmit)="updateContact()" [formGroup]="editContactForm">
+    <div class="accordion vertical">
+
+      <ion-item>
+        <ion-avatar (click)="selectImage()"
+          style="width: 100px; height: 100px; margin: 0 auto 40px; position: relative;">
+          <ion-icon name="add-outline" class="edite-icon" color="primary"></ion-icon>
+          <img *ngIf="images.length > 0" [src]="images[0].path">
+          <img *ngIf="images.length == 0" [src]="contact.image">
+        </ion-avatar>
+      </ion-item>
+
+      <label class="contact">Contact Information</label>
+      <div class="content">
+        <ion-item>
+          <ion-label position="floating">Full Name</ion-label>
+          <ion-input [(ngModel)]="contact.name" formControlName="name" type="text" placeholder="Name"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Email</ion-label>
+          <ion-input [(ngModel)]="contact.email" formControlName="email" type="email" placeholder="Email Address">
+          </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Husband/Father Name</ion-label>
+          <ion-input [(ngModel)]="contact.father_husband_name" formControlName="father_husband_name" type="text"
+            placeholder="Husband/Father Name"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Date of Birth</ion-label>
+          <ion-datetime [(ngModel)]="contact.dob" formControlName="dob" placeholder="Date Of Birth">
+          </ion-datetime>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Gender</ion-label>
+          <ion-select [(ngModel)]="contact.gender" [value]="contact.gender" formControlName="gender" interface="alert"
+            multiple="false" [selectedText]="contact.gender" placeholder="Select Gender">
+            <ion-select-option *ngFor="let value of allStaticAndDynamicLists.genders | keyvalue"
+              value="{{value.value}}">{{value.value}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Marital Status</ion-label>
+          <ion-select [(ngModel)]="contact.marital_status_id" [value]="contact.marital_status"
+            formControlName="marital_status_id" interface="alert" multiple="false"
+            [selectedText]="contact.marital_status" placeholder="Select Marital Status">
+            <ion-select-option *ngFor="let value of allStaticAndDynamicLists.marital_status_for_contacts | keyvalue"
+              value="{{value.key}}">{{value.value}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Occupation</ion-label>
+          <ion-select [(ngModel)]="contact.occupation" [value]="contact.occupation" formControlName="occupation"
+            interface="alert" multiple="false" [selectedText]="contact.occupation" placeholder="Select Occupation">
+            <ion-select-option *ngFor="let value of allStaticAndDynamicLists.jobs | keyvalue" value="{{value.value}}">
+              {{value.value}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Current Posting</ion-label>
+          <ion-input [(ngModel)]="contact.current_posting" formControlName="current_posting" type="text"
+            placeholder="Current Posting">
+          </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Education</ion-label>
+          <ion-select [(ngModel)]="contact.education" [value]="contact.education" formControlName="education"
+            interface="alert" multiple="false" [selectedText]="contact.education" placeholder="Select Education">
+            <ion-select-option *ngFor="let value of allStaticAndDynamicLists.educations | keyvalue"
+              value="{{value.value}}">
+              {{value.value}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Current Address</ion-label>
+          <ion-input [(ngModel)]="contact.current_address" formControlName="current_address" type="text"
+            placeholder="Current Address"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Native Village</ion-label>
+          <ion-input [(ngModel)]="contact.native_village" formControlName="native_village" type="text"
+            placeholder="Native Village"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Facebook id</ion-label>
+          <ion-input [(ngModel)]="contact.facebook_id" formControlName="facebook_id" type="text" placeholder="Facebook Username"></ion-input>
+        </ion-item>
+
+        <div class="mobiles-box">
+          <div formArrayName="mobiles"
+            *ngFor="let singleValue of editContactForm.get('mobiles')['controls']; let i = index;">
+            <div class="single-box" [formGroupName]="i">
+              <ion-item>
+                <ion-label position="floating">Mobile Number</ion-label>
+                <ion-input type="tel" formControlName="mobile" placeHolder="Mobile Number" minlength="10"
+                  maxlength="10">
+                </ion-input>
+                <ion-icon *ngIf="i > 0" slot="end" (click)="removeMobileNumber(i)" name="close-circle"></ion-icon>
+              </ion-item>
+            </div>
+          </div>
+          <ion-button type="button" class="btn-theme" slot="end" size="small" shape="round" color="primary"
+            (click)="addMoreMobilesNumbers()">Add More</ion-button>
+        </div>
+
+        <div class="relatives-box">
+          <div formArrayName="relatives" class="relative"
+            *ngFor="let singleValue of editContactForm.get('relatives')['controls']; let i = index;">
+            <div class="single-box" [formGroupName]="i">
+              <ion-item>
+                <ion-label position="floating">Relative Name</ion-label>
+                <ion-input type="text" formControlName="name" placeHolder="Relative Name"></ion-input>
+                <ion-icon *ngIf="i > 0" slot="end" (click)="removeRelative(i)" name="close-circle"></ion-icon>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Relative Relation</ion-label>
+                <ion-input type="text" formControlName="relation" placeHolder="Relative Relation"></ion-input>
+              </ion-item>
+
+            </div>
+          </div>
+          <ion-button type="button" class="btn-theme" slot="end" size="small" shape="round" color="primary"
+            (click)="addMoreRelatives()">Add More</ion-button>
+        </div>
+      </div>
+
+    </div>
+
+    <ion-button type="submit" class="btn-theme" shape="round" color="primary" [disabled]="!editContactForm.valid">Update
+      Contact</ion-button>
+  </form>
+
+</ion-content>

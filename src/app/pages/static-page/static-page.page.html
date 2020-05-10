@@ -1,0 +1,15 @@
+
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start" color="white">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title color="light">
+      {{ pageDetail.title }}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="background ion-padding" fullscreen>
+  <div style="color: #fff;"  [innerHTML]="pageDetail.description" ></div>
+</ion-content>

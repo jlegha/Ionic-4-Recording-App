@@ -1,0 +1,18 @@
+
+
+ion-content{
+    --background: #fff url('../../../assets/imgs/login-bg-new.jpg') no-repeat center center / cover;
+}
+.logo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+ion-toolbar {
+    --background: transparent;
+    --ion-color-base: transparent !important;
+    }
+    ion-toolbar.sc-ion-back-button-md-h:not(.ion-color):not(.ion-color), ion-toolbar:not(.ion-color) .sc-ion-back-button-md-h:not(.ion-color){
+        color: #fff;
+    }

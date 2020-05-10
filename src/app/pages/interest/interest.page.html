@@ -1,0 +1,73 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Interest
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<!-- segment button  -->
+<ion-segment *ngIf="profiles" [(ngModel)]="interest" color="primary" style="background: #fff;">
+  <ion-segment-button value="sent_button" (ionSelect)="listInterestedProfiles('sent')">
+    <ion-label>Interest Sent</ion-label>
+  </ion-segment-button>
+  <ion-segment-button value="received-button" (ionSelect)="listInterestedProfiles('received')">
+    <ion-label>Interest Received</ion-label>
+  </ion-segment-button>
+</ion-segment>
+
+<ion-content no-padding color="secondary">
+
+  <!-- profile slider view -->
+  <ion-grid padding>
+    <ion-row>
+      <ion-col *ngFor ="let profile of header_profiles">
+        <ion-thumbnail (click)="getProfilesBasedForSelectedProfile(profile.id)">
+          <img [style.border]="profile.id==profile_id ? active : ''" src="{{ profile.image }}">
+        </ion-thumbnail>
+        {{profile.name}}
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- profile list view -->
+  <div>
+    
+    <ion-card color="light" [routerDirection]="'forward'" routerLink="/profile-detail/{{profile.profile_id}}" *ngFor ="let profile of profiles">
+      <div style="width: 33.33%; float: left;">
+        <img style="padding: 8px 0 8px 6px;" src="{{ profile.image }}" />
+      </div>
+      <div style="width: 66.67%; float: left;">
+        <ion-card-header>
+          <ion-label slot="end">{{ profile.profile_number }}</ion-label>
+          <h1>{{ profile.name }}</h1>
+          <p>{{ profile.last_online }}</p>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-row>
+            <ion-col>
+              {{ profile.age }} Years {{ profile.height }}<br>
+              {{ profile.highest_education }}<br>
+              {{ profile.state }}
+            </ion-col>
+            <ion-col>
+              {{ profile.job }}<br>
+              Rs. {{ profile.income }}<br>
+              {{ profile.marital_status }}
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </div>
+    </ion-card>
+
+    <div *ngIf="!profiles || profiles.length <= 0" class="no-item-found">
+      No profile found.
+    </div>
+
+  </div>
+
+</ion-content>
+
+<!-- <app-tabs></app-tabs> -->

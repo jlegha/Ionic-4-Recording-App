@@ -1,0 +1,160 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Contacts
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-no-padding" color="secondary">
+
+  <ion-searchbar animated="true" placeholder="Search Contact" showCancelButton="always" (ionChange)="onSearchChange($event)"></ion-searchbar>
+
+    <!-- only display this section for payment button -->
+  <ion-item *ngIf="!isContactPayment" class="ion-margin ion-no-padding contact-box" color="light">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12">
+          <ion-card-header class="ion-no-padding ion-text-center" >
+            <h1 class="ion-no-margin"></h1>
+            <label class="ion-no-margin" color="primary">Please make payment for take full advantage of the application.</label>
+          </ion-card-header>
+          <ion-card-content class="ion-no-padding ion-margin-top">
+            <ion-grid>
+              <ion-row>
+                <ion-col class="ion-no-padding">
+                  <ion-button expand="full" (click)="makeContactPayment()">Payment</ion-button>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-card-content>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+
+  <ion-item *ngFor="let profile of contacts" class="ion-no-padding contact-box" color="light">
+    <ion-grid style="min-height: 200px;">
+      <ion-row>
+        <ion-col size="4" (click)="gotoContactDetail(profile.id)" style="z-index: 1;">
+          <img class="contact-img" src="{{ profile.image }}" />
+        </ion-col>
+        <ion-col size="8" (click)="gotoContactDetail(profile.id)" style="z-index: 1;">
+          <ion-card-header class="ion-no-padding">
+            <h1 class="ion-no-margin contact-name">{{ profile.name }}</h1>
+            <p class="ion-no-margin" color="primary">{{ profile.contact_unique_id }}</p>
+            <p class="ion-no-margin" color="primary">{{ profile.city }}</p>
+          </ion-card-header>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-tabs>
+      <ion-tab-bar color="dark">
+        <ion-tab-button (click)="sendToCall()" [disabled]="!isContactPayment">
+          <ion-icon name="call"></ion-icon>
+          <ion-label>Call</ion-label>
+        </ion-tab-button>
+
+        <ion-tab-button (click)="whatsapp()" [disabled]="!isContactPayment">
+          <ion-icon name="logo-whatsapp"></ion-icon>
+          <ion-label>Whatsapp</ion-label>
+        </ion-tab-button>
+
+        <ion-tab-button (click)="messageBox()" [disabled]="!isContactPayment">
+          <ion-icon ios="ios-chatboxes" md="md-chatboxes"></ion-icon>
+          <ion-label>Message</ion-label>
+        </ion-tab-button>
+
+        <!-- <ion-tab-button (click)="report()" [disabled]="!isContactPayment">
+          <ion-icon name="mail-open"></ion-icon>
+          <ion-label>Report</ion-label>
+        </ion-tab-button> -->
+      </ion-tab-bar>
+    </ion-tabs>
+  </ion-item>
+
+  
+  <div *ngIf="!contacts || contacts.length <= 0" class="no-item-found">
+    No contact found.
+  </div>
+
+<!-- 
+  <ion-item *ngFor="let profile of contacts" class="ion-no-padding" color="light">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="4" (click)="gotoContactDetail(profile.id)" style="z-index: 1;">
+          <img class="contact-img" src="{{ profile.image }}" />
+        </ion-col>
+        <ion-col size="8" (click)="gotoContactDetail(profile.id)" style="z-index: 1;">
+          <ion-card-header class="ion-no-padding">
+            <h1 class="ion-no-margin contact-name">{{ profile.name }}</h1>
+            <p class="ion-no-margin" color="primary">{{ profile.contact_unique_id }}</p>
+            <p class="ion-no-margin" color="primary">{{ profile.city }}</p>
+          </ion-card-header>
+        </ion-col>
+      </ion-row>
+    </ion-grid> -->
+
+  <!-- </ion-item> -->
+
+  <!-- <ion-list *ngIf="contacts.length == 0">
+    <ion-item *ngFor="let i of [1,2,3,4,5]">
+      <ion-avatar slot="start">
+        <ion-skeleton-text animated></ion-skeleton-text>
+      </ion-avatar>
+      <ion-label class="ion-text-capitalize">
+        <h2>
+          <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+        </h2>
+        <p>
+          <ion-skeleton-text animated style="width: 20%"></ion-skeleton-text>
+        </p>
+      </ion-label>
+    </ion-item>
+  </ion-list> -->
+
+
+  <!-- profile list view -->
+  <!-- <ion-item *ngFor="let profile of contacts" class="ion-no-padding" color="light">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="4" (click)="gotoContactDetail(profile.id)" style="z-index: 1;">
+          <img class="contact-img" src="{{ profile.image }}" />
+        </ion-col>
+        <ion-col size="8" (click)="gotoContactDetail(profile.id)" style="z-index: 1;">
+          <ion-card-header class="ion-no-padding">
+            <h1 class="ion-no-margin contact-name">{{ profile.name }}</h1>
+            <p class="ion-no-margin" color="primary">{{ profile.address }}</p>
+          </ion-card-header>
+          <ion-card-content class="ion-no-padding">
+            <ion-grid>
+              <ion-row>
+                <ion-col class="ion-no-padding">
+                  {{ profile.age }} Years<br>
+                  {{ profile.education }}<br>
+                  {{ profile.state }}
+                </ion-col>
+                <ion-col class="ion-no-padding">
+                  {{ profile.job }}<br>
+                  {{ profile.marital_status }}<br>
+                  {{ profile.district }}
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-card-content>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+  </ion-item>
+
+  <div *ngIf="!contacts || contacts.length <= 0" class="no-item-found">
+    No chat contact found.
+  </div> -->
+
+</ion-content>
+

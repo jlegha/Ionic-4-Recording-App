@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)=onCancel()>
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Report Event</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding ion-text-center" class="background" no-scroll>
+  <form #report="ngForm" (ngSubmit)="onSubmit(report)">
+    <ion-grid>
+      <ion-row class="ion-justify-content-center">
+        <ion-col class="ion-align-self-center" size-md="6" size-lg="5" size-xs="12">
+          <div class="ion-padding">
+            
+            <ion-item>
+              <ion-label position="floating" class="label">Description</ion-label>
+              <ion-textarea 
+                name="description" 
+                [(ngModel)]="description"
+                rows="6" 
+                cols="20" 
+                placeholder="Tell us more about your problem with this event." 
+                maxlength="180"
+                required
+                ></ion-textarea>
+            </ion-item>
+          </div>
+    
+          <div class="ion-padding">
+            <ion-button type="submit" size="large" color="primary" expand="block" [disabled]="report.invalid">SUBMIT</ion-button>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>

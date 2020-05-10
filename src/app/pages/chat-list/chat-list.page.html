@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Chat List
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+   	<ion-list *ngFor="let user of users" (click)="message(user)">
+        <ion-item>
+          <ion-thumbnail slot="start">
+            <img src="{{ user.profile_image }}">
+          </ion-thumbnail>
+          <ion-label>
+            <h3>{{ user.profile_name }}</h3>
+            <p>{{ user.last_message }}</p>
+          </ion-label>
+          <div slot="end" class="ion-text-center">
+	          <ion-label>{{ user.message_time }}</ion-label>
+	          <ion-badge *ngIf="user.unread_messages">{{ user.unread_messages }}</ion-badge>
+	      </div>
+        </ion-item>
+    </ion-list>
+
+    <div *ngIf="!users || users.length <= 0" class="no-item-found">
+      No chat history found.
+    </div>
+    
+</ion-content>

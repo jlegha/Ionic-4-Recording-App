@@ -1,0 +1,103 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Search
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="filters">
+  <form (ngSubmit)="search()" [formGroup]="searchform">
+    
+    <ion-grid *ngIf="!profile_id || profile_id==0">
+      <ion-row>
+        <ion-col style="padding: 30px 16px;">
+          <ion-label>Looking for</ion-label>
+        </ion-col>
+        <ion-col>
+          <div class="cc-selector">
+            <input [(ngModel)]="filters.looking_for" id="groom" type="radio" formControlName="looking_for"
+              [checked]="filters.looking_for=='Groom'" value="Groom" />
+            <label class="drinkcard-cc groom" for="groom"></label>
+            <input [(ngModel)]="filters.looking_for" id="bride" type="radio" formControlName="looking_for"
+              [checked]="filters.looking_for=='Bride'" value="Bride" />
+            <label class="drinkcard-cc bride" for="bride"></label>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    
+    <ion-item>
+      <ion-label>Profile</ion-label>
+      <ion-select formControlName="profile_id" interface="alert" placeholder="Select Profile"
+        (ionChange)="selectProfile($event)">
+        <ion-select-option value=0>None</ion-select-option>
+        <ion-select-option *ngFor="let profile of profiles" value="{{profile.id}}">
+          {{profile.name}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>
+        <h2>Age</h2>
+        <ion-range [(ngModel)]="ages" min="15" max="60" id="age" formControlName="age" [value]="ages" dual-knobs pin
+          color="primary">
+        </ion-range>
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>
+        <h2>Height</h2>
+        <ion-range [(ngModel)]="heights" min="3.0" max="7.0" id="height" formControlName="height" [value]="heights"
+          dual-knobs pin color="primary">
+        </ion-range>
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>
+        <h2>Income (in lakh's)</h2>
+        <ion-range [(ngModel)]="incomes" min="0" max="50" id="income" formControlName="income" [value]="incomes"
+          dual-knobs pin color="primary">
+        </ion-range>
+      </ion-label>
+    </ion-item>
+
+    <ion-list>
+
+      <ion-item>
+        <ion-label>Marital Status</ion-label>
+        <ion-select formControlName="marital_status_ids" interface="alert" multiple="true"
+          placeholder="Select Multiple">
+          <ion-select-option *ngFor="let marital_stats of marital_stats_list | keyvalue" value="{{marital_stats.key}}">
+            {{marital_stats.value}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Education</ion-label>
+        <ion-select formControlName="eduction_ids" interface="alert" multiple="true" placeholder="Select Multiple">
+          <ion-select-option *ngFor="let education of educations | keyvalue" value="{{education.key}}">
+            {{education.value}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Occupation</ion-label>
+        <ion-select formControlName="job_ids" interface="alert" multiple="true" placeholder="Select Multiple">
+          <ion-select-option *ngFor="let job of jobs | keyvalue" value="{{job.key}}">{{job.value}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+    </ion-list>
+
+    <ion-toolbar padding>
+      <ion-button (click)="backToHome()" shape="round" slot="start">Cancel</ion-button>
+      <ion-button (click)="search()" shape="round" slot="end">Search</ion-button>
+    </ion-toolbar>
+  </form>
+</ion-content>
